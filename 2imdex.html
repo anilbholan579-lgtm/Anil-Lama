@@ -1,0 +1,470 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Aashika - Special Proposal ❤️</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #2a0845, #6441a5, #fe4a49, #ff758c);
+            background-size: 400% 400%;
+            animation: bgShift 12s ease infinite;
+            overflow-x: hidden;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        @keyframes bgShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Hearts */
+        .hearts-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart-item {
+            position: absolute;
+            animation: floatUp linear infinite;
+            filter: drop-shadow(0 0 5px rgba(255, 105, 180, 0.8));
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0.3) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container Card */
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 25px 20px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Audio Player Bar */
+        .audio-bar {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .audio-btn {
+            width: 28px;
+            height: 28px;
+            background: #ff4757;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .audio-lbl {
+            font-size: 0.85rem;
+            color: #ffd1dc;
+        }
+
+        /* Titles */
+        .title-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #ffdeeb;
+            text-shadow: 0 0 10px rgba(255, 71, 87, 0.8);
+            margin-bottom: 2px;
+        }
+
+        .title-sub {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        /* Couple Photo Slideshow */
+        .photo-box {
+            width: 100%;
+            height: 250px;
+            border-radius: 18px;
+            overflow: hidden;
+            margin: 0 auto 15px auto;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            position: relative;
+            background: #222;
+        }
+
+        .couple-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .couple-img.active {
+            opacity: 1;
+        }
+
+        /* Proposal Question */
+        .question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 15px 0 20px 0;
+        }
+
+        /* Action Buttons */
+        .btn-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            min-height: 50px;
+            position: relative;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-yes {
+            background: linear-gradient(45deg, #2ed573, #10ac84);
+            color: white;
+            z-index: 20;
+        }
+
+        .btn-no {
+            background: linear-gradient(45deg, #ff4757, #ff6b81);
+            color: white;
+            position: relative;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        /* Fullscreen Celebration Popup */
+        .popup-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+
+        .popup-mask.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.4), rgba(100, 65, 165, 0.6));
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 25px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 71, 87, 0.8);
+        }
+
+        .popup-content h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.6rem;
+            color: #ffd1dc;
+            margin-bottom: 10px;
+        }
+
+        .popup-content p {
+            font-size: 1.15rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .btn-close {
+            background: #fff;
+            color: #ff4757;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Confetti Canvas */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 101;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Hearts -->
+    <div class="hearts-layer" id="heartsLayer"></div>
+
+    <!-- Card -->
+    <div class="card">
+        <!-- Audio Bar -->
+        <div class="audio-bar" id="audioToggle">
+            <div class="audio-btn" id="audioIcon">▶</div>
+            <div class="audio-lbl" id="audioStatus">Play Music 🎵</div>
+        </div>
+
+        <h1 class="title-name">Dear Aashika</h1>
+        <h2 class="title-sub">I Have Something to Tell You ❤️</h2>
+
+        <!-- Couple Aesthetic Photos -->
+        <div class="photo-box">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" alt="Couple 1" class="couple-img active">
+            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" alt="Couple 2" class="couple-img">
+            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" alt="Couple 3" class="couple-img">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" alt="Couple 4" class="couple-img">
+        </div>
+
+        <div class="question">Will you be mine forever? ❤️</div>
+
+        <!-- Buttons -->
+        <div class="btn-wrap">
+            <button class="btn btn-yes" id="yesBtn">YES ❤️</button>
+            <button class="btn btn-no" id="noBtn">NO 💔</button>
+        </div>
+    </div>
+
+    <!-- Celebration Popup -->
+    <div class="popup-mask" id="popupMask">
+        <div class="popup-content">
+            <h2>Yay! Forever! 💖</h2>
+            <p>I knew you loved me too! ❤️<br>Love you so much, Darling! 💖</p>
+            <button class="btn-close" id="closePopup">Close 💕</button>
+        </div>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- Music Stream -->
+    <audio id="bgSong" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-love-112185.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 1. Audio Logic
+        const bgSong = document.getElementById('bgSong');
+        const audioToggle = document.getElementById('audioToggle');
+        const audioIcon = document.getElementById('audioIcon');
+        const audioStatus = document.getElementById('audioStatus');
+        let isPlaying = false;
+
+        function togglePlay() {
+            if (isPlaying) {
+                bgSong.pause();
+                audioIcon.textContent = '▶';
+                audioStatus.textContent = 'Play Music 🎵';
+                isPlaying = false;
+            } else {
+                bgSong.play().then(() => {
+                    audioIcon.textContent = '⏸';
+                    audioStatus.textContent = 'Playing Music... 💖';
+                    isPlaying = true;
+                }).catch(() => {
+                    audioStatus.textContent = 'Tap to Play Music 🎵';
+                });
+            }
+        }
+
+        audioToggle.addEventListener('click', togglePlay);
+
+        // Auto start audio on tap
+        document.body.addEventListener('touchstart', function startAudio() {
+            if(!isPlaying) togglePlay();
+            document.body.removeEventListener('touchstart', startAudio);
+        }, { once: true });
+
+        // 2. Photo Slideshow
+        const imgs = document.querySelectorAll('.couple-img');
+        let imgIdx = 0;
+
+        setInterval(() => {
+            imgs[imgIdx].classList.remove('active');
+            imgIdx = (imgIdx + 1) % imgs.length;
+            imgs[imgIdx].classList.add('active');
+        }, 3000);
+
+        // 3. Floating Hearts
+        const heartsLayer = document.getElementById('heartsLayer');
+        const icons = ['❤️', '💖', '💕', '💗', '✨'];
+
+        function addHeart() {
+            const h = document.createElement('div');
+            h.className = 'heart-item';
+            h.textContent = icons[Math.floor(Math.random() * icons.length)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (Math.random() * 18 + 14) + 'px';
+            const duration = Math.random() * 3 + 4;
+            h.style.animationDuration = duration + 's';
+
+            heartsLayer.appendChild(h);
+            setTimeout(() => h.remove(), duration * 1000);
+        }
+
+        setInterval(addHeart, 350);
+
+        // 4. Escaping NO Button
+        const noBtn = document.getElementById('noBtn');
+
+        function escapeBtn(e) {
+            if(e) e.preventDefault();
+            const w = noBtn.offsetWidth || 80;
+            const h = noBtn.offsetHeight || 40;
+
+            const x = Math.max(20, Math.floor(Math.random() * (window.innerWidth - w - 20)));
+            const y = Math.max(20, Math.floor(Math.random() * (window.innerHeight - h - 20)));
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.style.zIndex = '999';
+        }
+
+        noBtn.addEventListener('touchstart', escapeBtn);
+        noBtn.addEventListener('mouseover', escapeBtn);
+        noBtn.addEventListener('click', escapeBtn);
+
+        // 5. YES Button Popup & Confetti
+        const yesBtn = document.getElementById('yesBtn');
+        const popupMask = document.getElementById('popupMask');
+        const closePopup = document.getElementById('closePopup');
+
+        yesBtn.addEventListener('click', () => {
+            if(!isPlaying) togglePlay();
+            popupMask.classList.add('active');
+            startConfetti();
+        });
+
+        closePopup.addEventListener('click', () => {
+            popupMask.classList.remove('active');
+            stopConfetti();
+        });
+
+        // 6. Confetti
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        let dots = [];
+        let animId = null;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = -10;
+                this.size = Math.random() * 8 + 6;
+                this.color = ['#ff4757', '#2ed573', '#ffa502', '#1e90ff', '#ffffff'][Math.floor(Math.random() * 5)];
+                this.vy = Math.random() * 4 + 2;
+                this.vx = Math.random() * 2 - 1;
+            }
+            update() {
+                this.y += this.vy;
+                this.x += this.vx;
+                if(this.y > canvas.height) this.y = -10;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        function startConfetti() {
+            dots = Array.from({length: 100}, () => new Particle());
+            renderConfetti();
+        }
+
+        function renderConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            dots.forEach(d => { d.update(); d.draw(); });
+            animId = requestAnimationFrame(renderConfetti);
+        }
+
+        function stopConfetti() {
+            if(animId) cancelAnimationFrame(animId);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</body>
+</html>
+
+```
